@@ -1,0 +1,91 @@
+// Schema do banco de dados - SOC Insight
+// Usando MySQL
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  OPERADOR
+  SUPERVISOR
+  ANALISTA
+  GESTOR
+}
+
+enum StatusOcorrencia {
+  ABERTA
+  EM_ANDAMENTO
+  RESOLVIDA
+  ARQUIVADA
+}
+
+enum Prioridade {
+  BAIXA
+  MEDIA
+  ALTA
+  CRITICA
+}
+
+model User {
+  id        String   @id @default(uuid())
+  nome      String
+  email     String   @unique
+  senha     String
+  role      Role     @default(OPERADOR)
+  ativo     Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  ocorrencias      Ocorrencia[]     @relation("OcorrenciaCriador")
+  turnos           PassagemTurno[]  @relation("TurnoCriador")
+  comentarios      Comentario[]
+
+  @@map("users")
+}
+
+model Ocorrencia {
+  id          String            @id @default(uuid())
+  titulo      String
+  descricao   String            @db.Text
+  categoria   String
+  status      StatusOcorrencia  @default(ABERTA)
+  prioridade  Prioridade        @default(MEDIA)
+  local       String?
+  criadoPorId String
+  criadoPor   User              @relation("OcorrenciaCriador", fields: [criadoPorId], references: [id])
+  comentarios Comentario[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  resolvidaEm DateTime?
+
+  @@map("ocorrencias")
+}
+
+model Comentario {
+  id           String     @id @default(uuid())
+  texto        String     @db.Text
+  ocorrenciaId String
+  ocorrencia   Ocorrencia @relation(fields: [ocorrenciaId], references: [id], onDelete: Cascade)
+  autorId      String
+  autor        User       @relation(fields: [autorId], references: [id])
+  createdAt    DateTime   @default(now())
+
+  @@map("comentarios")
+}
+
+model PassagemTurno {
+  id          String   @id @default(uuid())
+  turno       String   // ex: "Manhã", "Tarde", "Noite"
+  resumo      String   @db.Text
+  pendencias  String?  @db.Text
+  eventos     String?  @db.Text
+  criadoPorId String
+  criadoPor   User     @relation("TurnoCriador", fields: [criadoPorId], references: [id])
+  createdAt   DateTime @default(now())
+
+  @@map("passagens_turno")
+}

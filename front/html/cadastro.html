@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro · SOC Centro de Distribuição</title>
+  <meta name="description" content="Crie sua conta no SOC Insight — plataforma de gestão para o Centro de Distribuição.">
+  <link rel="stylesheet" href="../style/styles.css">
+  <link rel="stylesheet" href="../style/auth.css">
+</head>
+<body class="auth-body">
+
+  <div class="auth-layout">
+
+    <!-- ===== Painel Esquerdo ===== -->
+    <div class="auth-panel">
+      <div class="auth-panel-inner">
+
+        <div class="auth-brand">
+          <div class="auth-brand-mark">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l8 3.5v5C20 15.5 16.5 20 12 22 7.5 20 4 15.5 4 10.5v-5L12 2z"/>
+            </svg>
+          </div>
+          <div class="auth-brand-text">
+            <div class="auth-brand-name">SOC</div>
+            <div class="auth-brand-sub">Centro de Distribuição</div>
+          </div>
+        </div>
+
+        <div class="auth-panel-headline">
+          <h1>Centro de<br>Operações de<br>Segurança</h1>
+          <p>Plataforma centralizada de registro de ocorrências, gestão de turnos e indicadores operacionais.</p>
+        </div>
+
+        <div class="auth-features">
+          <div class="auth-feature-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+            </svg>
+            Monitoramento 24/7
+          </div>
+          <div class="auth-feature-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            Gestão de Equipes
+          </div>
+          <div class="auth-feature-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            Acesso Controlado
+          </div>
+          <div class="auth-feature-badge">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>
+            </svg>
+            Indicadores em Tempo Real
+          </div>
+        </div>
+
+        <div class="auth-deco-circle"></div>
+      </div>
+    </div>
+
+    <!-- ===== Painel Direito (Form) ===== -->
+    <div class="auth-form-side">
+      <div class="auth-form-box">
+
+        <div class="auth-form-header">
+          <h2>Criar conta</h2>
+          <p>Preencha os dados para solicitar acesso ao sistema</p>
+        </div>
+
+        <form id="cadastroForm" class="auth-form" novalidate>
+
+          <div id="cadastroError" class="auth-alert" style="display:none"></div>
+          <div id="cadastroSuccess" class="auth-alert auth-alert-success" style="display:none"></div>
+
+          <div class="auth-field">
+            <label for="cadastroNome">NOME COMPLETO</label>
+            <input
+              id="cadastroNome"
+              class="auth-input"
+              type="text"
+              placeholder="ex: Carlos Mendes"
+              autocomplete="name"
+              required
+            >
+          </div>
+
+          <div class="auth-field">
+            <label for="cadastroEmail">E-MAIL</label>
+            <input
+              id="cadastroEmail"
+              class="auth-input"
+              type="email"
+              placeholder="ex: carlos.mendes@soc.com"
+              autocomplete="email"
+              required
+            >
+          </div>
+
+          <div class="auth-field">
+            <label for="cadastroRole">PERFIL DE ACESSO</label>
+            <select id="cadastroRole" class="auth-input auth-select">
+              <option value="OPERADOR">Operador</option>
+              <option value="ANALISTA">Analista</option>
+              <option value="SUPERVISOR">Supervisor</option>
+              <option value="GESTOR">Gestor</option>
+            </select>
+          </div>
+
+          <div class="auth-field">
+            <label for="cadastroSenha">SENHA</label>
+            <div class="auth-input-wrap">
+              <input
+                id="cadastroSenha"
+                class="auth-input"
+                type="password"
+                placeholder="mínimo 6 caracteres"
+                autocomplete="new-password"
+                required
+                minlength="6"
+              >
+              <button type="button" class="toggle-pw" id="togglePw2" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-field">
+            <label for="cadastroConfirma">CONFIRMAR SENHA</label>
+            <div class="auth-input-wrap">
+              <input
+                id="cadastroConfirma"
+                class="auth-input"
+                type="password"
+                placeholder="repita a senha"
+                autocomplete="new-password"
+                required
+              >
+              <button type="button" class="toggle-pw" id="togglePw3" aria-label="Mostrar senha">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="auth-btn" id="cadastroBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/>
+            </svg>
+            <span id="cadastroBtnText">Criar Conta</span>
+          </button>
+
+        </form>
+
+        <div class="auth-form-footer">
+          Já tem conta?
+          <a href="login.html">Fazer login</a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <button class="auth-help-btn" aria-label="Ajuda">?</button>
+
+  <script src="../js/cadastro.js"></script>
+</body>
+</html>
