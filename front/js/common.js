@@ -15,7 +15,165 @@ const NAV_ITEMS = [
     icon:'<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/>' },
   { key:'relatorios', label:'Relatórios',        href:'relatorios.html',
     icon:'<path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/>' },
+  { key:'configuracoes', label:'Configurações',  href:'configuracoes.html',
+    icon:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
 ];
+
+/* ===== Perfil do usuário (persistido no navegador) ===== */
+const PROFILE_KEY = 'socProfile';
+
+function getProfile(){
+  try{
+    const raw = localStorage.getItem(PROFILE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+
+function saveProfile(profile){
+  const current = getProfile() || {};
+  const merged = { ...current, ...profile };
+  localStorage.setItem(PROFILE_KEY, JSON.stringify(merged));
+  updateShellProfile();
+  return merged;
+}
+
+function getInitials(name){
+  if(!name) return 'G';
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if(parts.length === 0) return 'G';
+  return (parts[0][0] + (parts[1] ? parts[1][0] : '')).toUpperCase();
+}
+
+function applyAvatar(el, profile){
+  const name = (profile && profile.name) || 'gabriel.lucas';
+  if(profile && profile.photo){
+    el.style.backgroundImage = `url(${profile.photo})`;
+    el.style.backgroundSize = 'cover';
+    el.style.backgroundPosition = 'center';
+    el.textContent = '';
+  } else {
+    el.style.backgroundImage = '';
+    el.textContent = getInitials(name);
+  }
+}
+
+function updateShellProfile(){
+  const profile = getProfile();
+  const avatarEl = document.getElementById('userAvatar');
+  const nameEl = document.getElementById('userName');
+  const roleEl = document.getElementById('userRole');
+  if(!avatarEl) return;
+  const name = (profile && profile.name) || 'gabriel.lucas';
+  const role = (profile && profile.role) || 'Operador SOC';
+  if(nameEl) nameEl.textContent = name;
+  if(roleEl) roleEl.textContent = role;
+  applyAvatar(avatarEl, profile);
+}
+
+/* ===== Notificações ===== */
+const NOTIF_READ_KEY = 'socNotifReadIds';
+
+const NOTIFICATIONS = [
+  { id:'n1', sev:'critico', title:'Acesso Não Autorizado', desc:'Portaria Principal · Carlos Mendes', time:'há 8 min',  href:'ocorrencias.html' },
+  { id:'n2', sev:'critico', title:'Incidente Veicular',     desc:'Pátio de Manobras · Ana Lima',     time:'há 34 min', href:'ocorrencias.html' },
+  { id:'n3', sev:'medio',   title:'Falha de Equipamento',   desc:'Câmera 14-C · Roberto Silva',      time:'há 1 h',    href:'ocorrencias.html' },
+  { id:'n4', sev:'alto',    title:'Furto / Tentativa',      desc:'Armazém B3 · Patricia Costa',      time:'há 3 h',    href:'ocorrencias.html' },
+  { id:'n5', sev:'medio',   title:'Objeto Suspeito',        desc:'Dock 1-A · Diego Souza',           time:'ontem',     href:'ocorrencias.html' },
+];
+
+function getReadIds(){
+  try{
+    const raw = localStorage.getItem(NOTIF_READ_KEY);
+    return raw ? new Set(JSON.parse(raw)) : new Set();
+  }catch(e){ return new Set(); }
+}
+
+function setReadIds(idsSet){
+  localStorage.setItem(NOTIF_READ_KEY, JSON.stringify([...idsSet]));
+}
+
+function getUnreadCount(){
+  const readIds = getReadIds();
+  return NOTIFICATIONS.filter(n => !readIds.has(n.id)).length;
+}
+
+function notifIconSvg(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>`;
+}
+
+function renderNotifContent(){
+  const readIds = getReadIds();
+  const unread = NOTIFICATIONS.filter(n => !readIds.has(n.id)).length;
+
+  const itemsHtml = NOTIFICATIONS.length ? NOTIFICATIONS.map(n => `
+    <a class="notif-item ${readIds.has(n.id) ? '' : 'unread'}" href="${n.href}" data-notif-id="${n.id}">
+      <span class="sev ${n.sev}"></span>
+      <span class="notif-body">
+        <span class="notif-title">${n.title}</span>
+        <span class="notif-desc">${n.desc}</span>
+        <span class="notif-time">${n.time}</span>
+      </span>
+      ${readIds.has(n.id) ? '' : '<span class="unread-dot"></span>'}
+    </a>`).join('') : `<div class="notif-empty">Nenhuma notificação por aqui.</div>`;
+
+  return `
+    <div class="notif-header">
+      <span>Notificações${unread ? ` (${unread})` : ''}</span>
+      <button class="notif-mark-all" id="notifMarkAll" type="button" ${unread ? '' : 'disabled'}>Marcar todas como lidas</button>
+    </div>
+    <div class="notif-list">${itemsHtml}</div>
+    <a class="notif-footer" href="ocorrencias.html">Ver todas as ocorrências</a>`;
+}
+
+function renderNotifPanel(){
+  return `<div class="notif-dropdown" id="notifDropdown" hidden>${renderNotifContent()}</div>`;
+}
+
+function updateNotifBadge(){
+  const dot = document.getElementById('notifDot');
+  if(!dot) return;
+  dot.style.display = getUnreadCount() > 0 ? '' : 'none';
+}
+
+function initNotifications(){
+  const wrap = document.getElementById('notifWrap');
+  const btn = document.getElementById('notifBtn');
+  const dropdown = document.getElementById('notifDropdown');
+  if(!wrap || !btn || !dropdown) return;
+
+  updateNotifBadge();
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.hidden = !dropdown.hidden;
+  });
+
+  // Delegação: cobre itens e o botão "marcar todas", mesmo depois do innerHTML ser atualizado
+  dropdown.addEventListener('click', (e) => {
+    if(e.target.closest('#notifMarkAll')){
+      e.preventDefault();
+      setReadIds(new Set(NOTIFICATIONS.map(n => n.id)));
+      dropdown.innerHTML = renderNotifContent();
+      updateNotifBadge();
+      return;
+    }
+    const item = e.target.closest('.notif-item');
+    if(item){
+      const readIds = getReadIds();
+      readIds.add(item.dataset.notifId);
+      setReadIds(readIds);
+      updateNotifBadge();
+      // não bloqueia a navegação — o item também é um link para a ocorrência
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if(!wrap.contains(e.target)) dropdown.hidden = true;
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape') dropdown.hidden = true;
+  });
+}
 
 function fmtDateTime(d){
   const dias = ['dom.','seg.','ter.','qua.','qui.','sex.','sáb.'];
@@ -31,6 +189,9 @@ function fmtDateTime(d){
 
 function renderShell(){
   const page = window.PAGE || { key:'dashboard', title:'Dashboard' };
+  const profile = getProfile();
+  const name = (profile && profile.name) || 'gabriel.lucas';
+  const role = (profile && profile.role) || 'Operador SOC';
 
   const navHtml = NAV_ITEMS.map(item => `
     <a class="nav-item ${item.key===page.key?'active':''}" href="${item.href}">
@@ -69,16 +230,21 @@ function renderShell(){
           </div>
         </div>
         <div class="topbar-right">
-          <button class="icon-btn" aria-label="Notificações">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
-            <span class="dot-badge"></span>
-          </button>
+          <div class="notif-wrap" id="notifWrap">
+            <button class="icon-btn" id="notifBtn" aria-label="Notificações" aria-haspopup="true">
+              ${notifIconSvg()}
+              <span class="dot-badge" id="notifDot"></span>
+            </button>
+            ${renderNotifPanel()}
+          </div>
           <div class="user-chip">
-            <div class="avatar">G</div>
-            <div class="user-meta">
-              <div class="u-name">gabriel.lucas</div>
-              <div class="u-role">Operador SOC</div>
-            </div>
+            <a class="user-chip-link" href="conta.html" title="Minha conta">
+              <div class="avatar" id="userAvatar">${name ? '' : 'G'}</div>
+              <div class="user-meta">
+                <div class="u-name" id="userName">${name}</div>
+                <div class="u-role" id="userRole">${role}</div>
+              </div>
+            </a>
             <button class="logout-btn" aria-label="Sair">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
             </button>
@@ -90,6 +256,9 @@ function renderShell(){
   `;
 
   document.getElementById('app-shell-top').outerHTML = shellHtml;
+
+  applyAvatar(document.getElementById('userAvatar'), profile);
+  initNotifications();
 
   document.getElementById('menuToggle').addEventListener('click', () => {
     document.getElementById('sidebar').classList.toggle('open');

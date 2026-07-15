@@ -297,3 +297,197 @@ tbody tr:hover{background:var(--gray-50);cursor:pointer;}
   .stat-grid{grid-template-columns:1fr;}
   table{min-width:760px;}
 }
+/* ============================================================
+   ADICIONAR ESTE BLOCO AO FINAL DE style/styles.css
+   (Estilos das telas de Configurações e Minha Conta)
+   ============================================================ */
+
+/* ===== Voltar / breadcrumbs ===== */
+.back-link{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;
+  color:var(--gray-600);margin-bottom:14px;
+}
+.back-link:hover{color:var(--orange);}
+.back-link svg{width:15px;height:15px;}
+
+/* ===== Seções dentro de cards ===== */
+.settings-section{margin-bottom:22px;}
+.settings-section:last-child{margin-bottom:0;}
+.section-head{padding:20px 24px 4px;}
+.section-desc{font-size:12.5px;color:var(--gray-500);margin-top:2px;}
+
+/* ===== Card-link (ex: "Minha Conta" dentro de Configurações) ===== */
+.link-card{
+  display:flex;align-items:center;gap:16px;
+  padding:18px 24px;transition:background .15s ease;
+}
+.link-card:hover{background:var(--gray-50);}
+.link-card .avatar-md{
+  width:52px;height:52px;border-radius:50%;background:var(--orange);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;
+  background-size:cover;background-position:center;flex-shrink:0;
+}
+.link-card-body{flex:1;min-width:0;}
+.link-card-title{font-size:15px;font-weight:700;color:var(--ink);}
+.link-card-sub{font-size:12.5px;color:var(--gray-500);margin-top:2px;}
+.link-card-arrow{width:18px;height:18px;color:var(--gray-400);flex-shrink:0;}
+
+/* ===== Linhas de preferência (toggle / select) ===== */
+.pref-row{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:16px 24px;border-top:1px solid var(--panel-border);
+}
+.pref-row:first-of-type{border-top:none;}
+.pref-info .pref-title{font-size:13.5px;font-weight:600;color:var(--ink);}
+.pref-info .pref-desc{font-size:12.5px;color:var(--gray-500);margin-top:2px;}
+.pref-control{flex-shrink:0;}
+
+/* ===== Toggle switch ===== */
+.switch{position:relative;display:inline-block;width:44px;height:26px;flex-shrink:0;}
+.switch input{opacity:0;width:0;height:0;position:absolute;}
+.switch .slider{
+  position:absolute;inset:0;cursor:pointer;background:var(--gray-200);
+  border-radius:20px;transition:background .15s ease;
+}
+.switch .slider::before{
+  content:'';position:absolute;height:20px;width:20px;left:3px;top:3px;
+  background:#fff;border-radius:50%;transition:transform .15s ease;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+.switch input:checked + .slider{background:var(--orange);}
+.switch input:checked + .slider::before{transform:translateX(18px);}
+.switch input:focus-visible + .slider{outline:2px solid var(--orange);outline-offset:2px;}
+
+/* ===== Foto de perfil (conta) ===== */
+.avatar-upload-row{display:flex;align-items:center;gap:22px;padding:22px 24px;flex-wrap:wrap;}
+.avatar-xl{
+  width:88px;height:88px;border-radius:50%;background:var(--orange);
+  color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:28px;
+  background-size:cover;background-position:center;flex-shrink:0;
+}
+.avatar-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+.avatar-hint{font-size:12px;color:var(--gray-500);margin-top:8px;}
+.visually-hidden{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+
+/* ===== Formulários (grid) ===== */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px;padding:20px 24px;}
+.form-grid.single{grid-template-columns:1fr;}
+.form-field{display:flex;flex-direction:column;gap:6px;min-width:0;}
+.form-field.full{grid-column:1 / -1;}
+.form-field label{font-size:12.5px;font-weight:600;color:var(--gray-700);}
+.form-field .hint{font-size:11.5px;color:var(--gray-500);}
+.form-field .input,
+.form-field .select,
+.form-field textarea{width:100%;}
+
+/* ===== Barra de salvar (sticky no rodapé do card) ===== */
+.save-bar{
+  position:sticky;bottom:0;left:0;right:0;
+  background:var(--white);border-top:1px solid var(--panel-border);
+  padding:14px 24px;display:flex;align-items:center;justify-content:flex-end;gap:14px;
+  border-radius:0 0 var(--radius-md) var(--radius-md);
+}
+.save-status{
+  font-size:12.5px;color:var(--low);font-weight:600;
+  display:flex;align-items:center;gap:6px;opacity:0;transition:opacity .2s ease;
+}
+.save-status.show{opacity:1;}
+.save-status svg{width:15px;height:15px;}
+
+/* ===== Zona de risco (ex: excluir sessão / conta) ===== */
+.danger-card{border-color:#F6C9C4;}
+.danger-card .link-card-title,
+.danger-card .section-title{color:var(--critical);}
+
+/* ============================================================
+   ADICIONAR ESTE BLOCO AO FINAL DE style/styles.css
+   (Painel dropdown de Notificações no topbar)
+   ============================================================ */
+
+.notif-wrap{position:relative;}
+
+.notif-dropdown{
+  position:absolute;top:calc(100% + 10px);right:-6px;
+  width:340px;max-width:calc(100vw - 32px);
+  background:var(--white);border:1px solid var(--panel-border);
+  border-radius:var(--radius-md);box-shadow:0 8px 28px rgba(20,20,25,.14);
+  z-index:60;overflow:hidden;
+}
+
+.notif-header{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:14px 16px;border-bottom:1px solid var(--panel-border);
+  font-size:13.5px;font-weight:700;color:var(--ink);
+}
+.notif-mark-all{
+  border:none;background:transparent;color:var(--orange);
+  font-size:12px;font-weight:600;padding:4px;border-radius:6px;
+}
+.notif-mark-all:hover:not(:disabled){background:var(--orange-light);}
+.notif-mark-all:disabled{color:var(--gray-400);cursor:default;}
+
+.notif-list{max-height:360px;overflow-y:auto;}
+.notif-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:13px 16px;border-top:1px solid var(--panel-border);
+  position:relative;transition:background .15s ease;
+}
+.notif-item:first-child{border-top:none;}
+.notif-item:hover{background:var(--gray-50);}
+.notif-item .sev{margin-top:5px;}
+.notif-item .sev::before{content:'';width:7px;height:7px;border-radius:50%;display:block;}
+.notif-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;}
+.notif-title{font-size:13px;font-weight:700;color:var(--ink);}
+.notif-desc{font-size:12px;color:var(--gray-500);}
+.notif-time{font-size:11px;color:var(--gray-400);margin-top:1px;}
+.notif-item.unread{background:var(--orange-light);}
+.notif-item.unread:hover{background:#FCE4DD;}
+.unread-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--orange);
+  flex-shrink:0;margin-top:6px;
+}
+.notif-empty{padding:28px 16px;text-align:center;font-size:13px;color:var(--gray-500);}
+
+.notif-footer{
+  display:block;text-align:center;padding:12px 16px;
+  font-size:12.5px;font-weight:600;color:var(--orange);
+  border-top:1px solid var(--panel-border);
+}
+.notif-footer:hover{background:var(--gray-50);}
+
+@media(max-width:520px){
+  .notif-dropdown{position:fixed;top:64px;left:12px;right:12px;width:auto;}
+}
+/* ============================================================
+   ADICIONAR ESTE BLOCO AO FINAL DE style/styles.css
+   (Tela de Relatórios: toolbar, barras de severidade/pipeline)
+   ============================================================ */
+
+.toolbar-between{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;margin-bottom:20px;
+}
+.toolbar-between .toolbar{margin-bottom:0;}
+
+.stat-icon.red{background:var(--critical-bg);color:var(--critical);}
+
+/* ===== Barras de progresso (severidade / pipeline de status) ===== */
+.stat-bar-list{padding:18px 24px 22px;display:flex;flex-direction:column;gap:16px;}
+.stat-bar-row{display:flex;flex-direction:column;gap:8px;}
+.stat-bar-head{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.sev-label{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:11.5px;font-weight:800;letter-spacing:.4px;
+}
+.sev-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.stat-bar-value{font-size:12.5px;font-weight:700;color:var(--ink);white-space:nowrap;}
+.stat-bar-track{height:7px;border-radius:20px;background:var(--gray-100);overflow:hidden;}
+.stat-bar-fill{height:100%;border-radius:20px;transition:width .3s ease;}
+
+@media(max-width:640px){
+  .toolbar-between{flex-direction:column;align-items:stretch;}
+  .toolbar-between .toolbar{justify-content:flex-start;}
+}

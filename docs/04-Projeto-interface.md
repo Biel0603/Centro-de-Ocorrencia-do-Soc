@@ -1,68 +1,79 @@
-
-# Projeto de interface
+# Projeto de Interface
 
 Visão geral da interação do usuário pelas telas do sistema e protótipo interativo das telas com as funcionalidades que fazem parte do sistema (wireframes).
 
 ## User flow
 
-Fluxo de usuário (user flow) é uma técnica que permite ao desenvolvedor mapear todo o fluxo de navegação do usuário na aplicação. Essa técnica serve para alinhar os caminhos e as possíveis ações que o usuário pode realizar junto com os membros da equipe.
+Fluxo de usuário (User Flow) é uma técnica que permite mapear toda a navegação do usuário dentro da aplicação. Essa técnica auxilia no planejamento da experiência do usuário, permitindo identificar os caminhos que cada perfil poderá percorrer durante a utilização do sistema.
 
-![User Flow ClearMind](images/User%20Flow%20ClearMind.png)
+![User Flow SOC Insight](images/fluxo.jpg)
 
-Link do design no figma: https://www.figma.com/design/ozSo7G72MKhHVCrDsH8adn/Copia-do-Clear-Mid-Para-fazer-o-User-Flow?node-id=0-1&t=pZCchpvUifCZksuI-1
+Link do design no Figma: https://www.figma.com/make/McHP8sE4rVGdEymcUkCYXa/Criar-bot%C3%A3o-transl%C3%BAcido?p=f&t=N9PYKmi2wiSnbtMi-0
 
-### Diagrama de fluxo
 
-O diagrama apresenta o estudo do fluxo de interação do usuário com o sistema interativo, muitas vezes sem a necessidade de desenhar o design das telas da interface. Isso permite que o design das interações seja bem planejado e tenha impacto na qualidade do design do wireframe interativo que será desenvolvido logo em seguida.
 
-![Diagrama de Fluxo ClearMind](<images/Diagrama de fluxo ClearMind.jpeg>)
 ## Wireframes
 
-São protótipos usados no design de interface para sugerir a estrutura de um site web e seu relacionamento entre suas páginas. Um wireframe web é uma ilustração que mostra o layout dos elementos fundamentais na interface.
+Os wireframes são protótipos de baixa fidelidade utilizados para definir a estrutura das telas da aplicação. Eles apresentam a organização dos componentes da interface, facilitando a validação da experiência do usuário antes da criação do layout final.
 
-![Wireframe ClearMind](images/Wireframe%20ClearMind.png)
+![Wireframe SOC Insight](images/Captura%20de%20tela%202026-07-14%20214928.png)
 
-Link do design no Figma: https://www.figma.com/design/xU1rVompjSVeAtjulOV4yh/Sem-t%C3%ADtulo?node-id=0-1&t=a4NXhqr18xXHbGqy-1
-
+Link do design no Figma: https://www.figma.com/SEU-LINK
 
 ## Protótipo interativo
 
-[Clique aqui para acessar o protótipo interativo do ClearMind no Figma](https://www.figma.com/proto/VUEz2PFaKwExWHOULBbhPR/Sem-t%C3%ADtulo?node-id=1-167&p=f&t=AAmfAsetomjrZaaF-0&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=1%3A167)
+[Clique aqui para acessar o protótipo interativo do SOC Insight no Figma](https://www.figma.com/SEU-LINK)
 
 ## Jornada do usuário
 
-A jornada do usuário descreve, em alto nível de detalhes, as etapas que diferentes perfis de usuários realizam para concluir uma tarefa específica na aplicação. Essa técnica ajuda a identificar pontos fortes e oportunidades de melhoria na experiência.  
+A jornada do usuário descreve, em alto nível de detalhes, as etapas realizadas pelos diferentes perfis dentro da aplicação para executar suas atividades diárias. Essa técnica permite compreender a experiência do usuário e identificar oportunidades de melhoria durante a navegação.
 
-![Jornada do Usuário](<images/Jornada do usuario.png>)
+![Jornada do Usuário](images/Jornada%20do%20Usuario.png)
 
 ## Interface do sistema
 
 ### Interface do sistema
 
-Abaixo estão apresentadas as interfaces finais da aplicação ClearMind e suas respectivas funções:
+Abaixo estão apresentadas as interfaces finais da aplicação **SOC Insight** e suas respectivas funções:
 
 **1. Tela de Login**
-![Tela de Login](images/imagem%20login.png)
-> **Função:** Porta de entrada para usuários já registrados acessarem o sistema de forma segura.
 
-**2. Tela de Cadastro**
-![Tela de Cadastro](images/imagem%20cadastro.png)
-> **Função:** Permite a criação de uma nova conta para novos usuários na plataforma.
+![Tela de Login](images/login.png)
 
-**3. Questionário Inicial (Onboarding)**
-![Onboarding - Vício](images/formulario1.png)
-![Onboarding - Data](images/formulario2.png)
-![Onboarding - Importância](images/formulario3.png)
-> **Função:** Sequência de telas apresentada no primeiro acesso para personalizar o perfil do usuário, coletando qual hábito ele deseja abandonar, a data de início da sobriedade e a urgência dessa mudança.
+> **Função:** Permite que operadores, analistas e gestores acessem o sistema de forma segura por meio da autenticação de usuário.
 
-**4. Página Inicial (Dashboard)**
-![Página Inicial](images/pag%20inicial.png)
-> **Função:** Painel principal que exibe o progresso do usuário, destacando o cronômetro de tempo sóbrio e o último marco atingido para manter a motivação.
+**2. Dashboard Operacional**
 
-**5. Comunidade**
-![Comunidade](images/comunidade.png)
-> **Função:** Espaço interativo de apoio mútuo onde os usuários podem ler relatos de outras pessoas e compartilhar suas próprias jornadas.
+![Dashboard](images/dashboard.png)
 
-**6. Diário**
-![Diário](images/diario.png)
-> **Função:** Ferramenta privada para o usuário registrar anotações e reflexões diárias sobre seus sentimentos e desafios.
+> **Função:** Exibe indicadores em tempo real, como quantidade de ocorrências, eventos críticos, registros do dia, produtividade da equipe e demais métricas operacionais.
+
+**3. Registro de Ocorrências**
+
+![Ocorrências](images/ocorrencias.png)
+
+> **Função:** Permite registrar, consultar, editar e acompanhar ocorrências operacionais, mantendo um histórico organizado de todos os eventos.
+
+**4. Passagem de Turno**
+
+![Passagem de Turno](images/passagem-turno.png)
+
+> **Função:** Centraliza as pendências e informações importantes para o próximo turno, garantindo uma comunicação eficiente entre as equipes.
+
+**5. Relatórios e Indicadores**
+
+![Relatórios](images/relatorios.png)
+
+> **Função:** Apresenta gráficos, estatísticas e relatórios operacionais que auxiliam supervisores e gestores na análise dos dados e na tomada de decisões.
+
+**6. Controle de Acesso**
+
+![Controle de Acesso](images/controle-acesso.png)
+
+> **Função:** Exibe os registros de entrada e saída de colaboradores, visitantes e prestadores de serviço, facilitando o monitoramento dos acessos.
+
+**7. Perfil do Usuário**
+
+![Perfil](images/perfil.png)
+
+> **Função:** Permite ao usuário visualizar e atualizar suas informações pessoais, alterar senha e configurar preferências do sistema.
